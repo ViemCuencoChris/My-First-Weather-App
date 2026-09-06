@@ -42,7 +42,7 @@ async function WeatherData(){
 }
 
 function UpdateWeather(weatherdata, forecastdata){
-    if(weatherdata.cod != 200 && forecastdata.cod != 200){
+    if(weatherdata.cod != 200 || forecastdata.cod != 200){
         cityInput.value = "City not found";
         cityInput.style.color = "rgb(255, 116, 108)";
         setTimeout(() => {
@@ -111,11 +111,12 @@ function UpdateWeather(weatherdata, forecastdata){
     //forecast data
     let index = 0;
     
+    //update each forecast items
     forecastItems.forEach((card) => {
         const forecast = forecastdata.list[index];
         const forecastWeather = forecast.weather[0].main;
-        const date = new Date(forecast.dt_txt);
-        const milHour = date.getHours();
+        const date = forecast.dt_txt.split(" ")[1];
+        const milHour = Number(date.split(":")[0]);
         const stanHour = (milHour % 12 != 0) ? milHour % 12 : 12;
 
         const degrees = Math.round(forecast.main.temp);
@@ -126,6 +127,7 @@ function UpdateWeather(weatherdata, forecastdata){
         heading.textContent = `${stanHour} ${(milHour >= 12) ? "PM" : "AM"}`;
         temp.textContent = `${degrees}° C`
 
+        //update forecast weather
         switch(forecastWeather){
             case "Clouds":
                 icon.src = "assets/clouds.png"
@@ -156,13 +158,11 @@ function UpdateWeather(weatherdata, forecastdata){
 
 citySearchBtn.addEventListener('click', () => {
     WeatherData();
-    cityInput.value = "";
 });
 
 cityInput.addEventListener('keydown', (event) => {
     if(event.key == "Enter"){
         WeatherData();
-        cityInput.value = "";
     }
 });
 
