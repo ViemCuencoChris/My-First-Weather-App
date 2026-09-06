@@ -12,7 +12,7 @@ body {
     background-size: cover;
     background-position: top;
     background-repeat: no-repeat;
-    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -24,31 +24,39 @@ body {
 
 /* Search Area */
 .search-bar, .weather-update-area {
-    width: 40rem;
+    width: clamp(45rem, -5rem + 62.5vw, 70rem);
+
     background-color: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-radius: 16px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #fdf0d5;
 }
 
+.search-bar {
+    height: clamp(2rem, 0rem + 2.5vw, 3rem);
+}
+
 .search-bar #location-btn, .search-bar #profile {
-    font-size: 1.2rem;
+    font-size: clamp(1.2rem, 0.6rem + 0.75vw, 1.5rem);
 }
 
 #location-btn {
+    width: clamp(2rem, -2rem + 5vw, 4rem);
+
     border-right: 1px solid rgba(253, 240, 213, 0.4);
-    width: 2rem;
     text-align: left;
     cursor: pointer;
 }
 
 .search-bar #search-field {
+    font-size: 1rem;
+
     background: none;
     border: none;
     outline: none;
@@ -64,7 +72,8 @@ body {
 
 /* Weather Update Area */
 .weather-update-area {
-    height: 20rem;
+    height: clamp(25rem, -5rem + 37.5vw, 40rem);
+
     display: flex;
     padding: 2.5rem;
     color: rgb(107, 77, 13);
@@ -73,7 +82,7 @@ body {
     gap: 2rem;
 }
 
-.weather-update-area .main-content, .side-content {
+.weather-update-area .main-content, .weather-update-area .side-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -81,51 +90,49 @@ body {
 }
 
 .weather-update-area .main-content h1 {
-    font-size: 8rem;
+    font-size: clamp(8rem, 0rem + 10vw, 12rem);
+
     line-height: 0.9;
 }
 
 .weather-update-area .main-content h2 {
-    font-size: 2rem;
+    font-size: clamp(2rem, -2rem + 5vw, 4rem);
 }
 
 .weather-update-area .main-content h3 {
-    font-size: 1.2rem;
+    font-size: clamp(1.2rem, -0.8rem + 2.5vw, 2.2rem);
 }
 
 .weather-update-area .side-content {
     flex: 1;
-    gap: 2rem;
 }
 
-.weather-update-area .side-content .weather-icon-container {
-    width: 100%;
-    height: 10rem;
-    overflow: hidden;
-    position: relative;
-}
+.weather-update-area .side-content #weather-icon {
+    width: clamp(15rem, -5rem + 25vw, 25rem);
 
-.weather-update-area .side-content .weather-icon-container #weather-icon {
-    width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 1;
     object-fit: cover;
-    object-position: center;
-    display: block;
 }
 
 .weather-update-area .side-content .side-info {
+    font-size: clamp(1.2rem, -0.8rem + 2.5vw, 2.2rem);
+    
     display: flex;
     gap: 1rem;
-    font-size: 1.2rem;
     justify-content: center;
     align-items: center;
 }
 
 /* weather forecast area */
 .weather-forecast-area {
-    width: 40rem;
-    max-height: 10rem;
+    width: clamp(45rem, -5rem + 62.5vw, 70rem);
+
     color: rgb(107, 77, 13);
+}
+
+.weather-forecast-area h4 {
+    font-size: clamp(1.5rem, -0.5rem + 2.5vw, 2.5rem);
 }
 
 .weather-forecast-area .forecast-cards {
@@ -144,17 +151,18 @@ body {
 }
 
 .weather-forecast-area .forecast-cards .card {
+    height: clamp(8rem, -4rem + 15vw, 14rem);
+    flex: 0 0 clamp(6rem, -6rem + 15vw, 12rem);
+
     background-color: rgba(224, 215, 195, 0.4);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    height: 8rem;
-    flex: 0 0 6rem;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 0.5rem;
+    padding: 1rem 0.5rem;
 }
 
 .card.hidden {
@@ -162,16 +170,17 @@ body {
 }
 
 .weather-forecast-area .forecast-cards .card h5 {
-    font-size: 1rem;
+    font-size: clamp(1.2rem, -0.4rem + 2vw, 2rem);
 }
 
 .weather-forecast-area .forecast-cards .card img {
-    width: 3rem;
+    width: clamp(3rem, -3rem + 7.5vw, 6rem);
+
     height: auto;
     aspect-ratio: 1;
     object-fit: cover;
 }
 
 .weather-forecast-area .forecast-cards .card p {
-    font-size: 0.8rem;
+    font-size: clamp(1rem, 0rem + 1.25vw, 1.5rem);
 }
