@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css">
+</head>
+<body>
+    <div class="search-bar">
+        <i id="location-btn" class="fa-solid fa-magnifying-glass"></i>
+        <input id="search-field" type="text" placeholder="Search City or Zip Code">
+        <i id="profile" class="fa-regular fa-circle-user"></i>
+    </div>
+
+    <div class="weather-update-area">
+        <div class="main-content">
+            <h1 id="degrees"></h1>
+            <h2 id="status"></h2>
+            <h3 id="city"></h3>
+        </div>
+        <div class="side-content">
+            <div class="weather-icon-container">
+                <img id="weather-icon" src="" alt="weather">
+            </div>
+            <div class="side-info">
+                <h4 id="humidity"></h4>
+                <h4 id="wind"></h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="weather-forecast-area">
+        <h4>Hourly Forecast</h4>
+        <div class="forecast-cards">
+            <div class="card">
+                <h5>7am</h5>
+                <div class="forecast-weather-icon-container">
+                    <img id="forecast-weather-icon" src="assets/clear.png" alt="weather">
+                </div>
+                <p>63°</p>
+            </div>
+            <div class="card">
+                <h5>7am</h5>
+                <div class="forecast-weather-icon-container">
+                    <img id="forecast-weather-icon" src="assets/clouds.png" alt="weather">
+                </div>
+                <p>63°</p>
+            </div>
+            <div class="card">
+                <h5>8am</h5>
+                <div class="forecast-weather-icon-container">
+                    <img id="forecast-weather-icon" src="assets/clear.png" alt="weather">
+                </div>
+                <p>63°</p>
+            </div>
+            <div class="card">
+                <h5>9am</h5>
+                <div class="forecast-weather-icon-container">
+                    <img id="forecast-weather-icon" src="assets/rain.png" alt="weather">
+                </div>
+                <p>63°</p>
+            </div>
+            <div class="card">
+                <h5>10am</h5>
+                <div class="forecast-weather-icon-container">
+                    <img id="forecast-weather-icon" src="assets/mist.png" alt="weather">
+                </div>
+                <p>63°</p>
+            </div>
+            <div class="card">
+                <h5>11am</h5>
+                <div class="forecast-weather-icon-container">
+                    <img id="forecast-weather-icon" src="assets/clouds.png" alt="weather">
+                </div>
+                <p>63°</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
