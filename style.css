@@ -152,6 +152,10 @@ body {
     padding: 0.5rem;
 }
 
+.card.hidden {
+    display: none;
+}
+
 .weather-forecast-area .forecast-cards .card h5 {
     font-size: 1rem;
 }

@@ -13,7 +13,7 @@ const weatherHumidity = document.getElementById("humidity");
 const weatherWind = document.getElementById("wind");
 
 //Forecast Weather of the City
-const forecastItems = document.querySelectorAll("card");
+const forecastItems = document.querySelectorAll(".card");
 
 const apiKey = "93c5c8b9a777a8c90a81c273437ec191";
 
@@ -33,18 +33,16 @@ async function WeatherData(){
     if(cityInput.value.trim() == ''){
         const weatherData = await fetchCurrentWeatherData("weather");
         const forecastData = await fetchCurrentWeatherData("forecast");
-        UpdateWeather(weatherData);
-        ForecastWeather(forecastData);
+        UpdateWeather(weatherData, forecastData);
     } else {
         const weatherData = await fetchWeatherData("weather");
         const forecastData = await fetchWeatherData("forecast");
-        UpdateWeather(weatherData);
-        ForecastWeather(forecastData);
+        UpdateWeather(weatherData, forecastData);
     }    
 }
 
-function UpdateWeather(weatherdata){
-    if(weatherdata.cod != 200){
+function UpdateWeather(weatherdata, forecastdata){
+    if(weatherdata.cod != 200 && forecastdata.cod != 200){
         cityInput.value = "City not found";
         cityInput.style.color = "rgb(255, 116, 108)";
         setTimeout(() => {
@@ -55,6 +53,7 @@ function UpdateWeather(weatherdata){
         return;
     }
 
+    //weather data
     const weather = weatherdata.weather[0].main;
     const temp = weatherdata.main.temp; 
     const city = weatherdata.name;
@@ -70,6 +69,7 @@ function UpdateWeather(weatherdata){
     weatherHumidity.innerHTML = `${humidityIcon}: ${humidity}`
     weatherWind.innerHTML = `${windIcon}: ${wind}`
 
+    //update main weather
     switch(weather){
         case "Clouds":
             weatherIcon.src = "assets/clouds.png"
@@ -108,21 +108,62 @@ function UpdateWeather(weatherdata){
             break;
     }
 
-    cityInput.value = "";
+    //forecast data
+    let index = 0;
+    
+    forecastItems.forEach((card) => {
+        const forecast = forecastdata.list[index];
+        const forecastWeather = forecast.weather[0].main;
+        const date = new Date(forecast.dt_txt);
+        const milHour = date.getHours();
+        const stanHour = (milHour % 12 != 0) ? milHour % 12 : 12;
+
+        const degrees = Math.round(forecast.main.temp);
+        const heading = card.querySelector("h5");
+        const icon = card.querySelector("img");
+        const temp = card.querySelector("p");
+
+        heading.textContent = `${stanHour} ${(milHour >= 12) ? "PM" : "AM"}`;
+        temp.textContent = `${degrees}° C`
+
+        switch(forecastWeather){
+            case "Clouds":
+                icon.src = "assets/clouds.png"
+                break;
+            case "Clear":
+                icon.src = "assets/clear.png"
+                break;
+            case "Rain":
+                icon.src = "assets/rain.png"
+                break;
+            case "Drizzle":
+                icon.src = "assets/drizzle.png"
+                break;
+            case "Mist":
+                icon.src = "assets/mist.png"
+                break;
+            case "Snow":
+                icon.src = "assets/snow.png"
+                break;
+            default:
+                icon.src = "assets/clouds.png"
+                break;
+        }
+
+        index++;
+    });
 }
 
 citySearchBtn.addEventListener('click', () => {
     WeatherData();
+    cityInput.value = "";
 });
 
 cityInput.addEventListener('keydown', (event) => {
     if(event.key == "Enter"){
         WeatherData();
+        cityInput.value = "";
     }
 });
-
-function ForecastWeather(weatherdata){
-    
-}
 
 WeatherData();
