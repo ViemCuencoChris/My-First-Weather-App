@@ -1,8 +1,10 @@
 const body = document.querySelector("body");
 
+//Locate city
 const cityInput = document.getElementById("search-field");
 const citySearchBtn = document.getElementById("location-btn");
 
+//Main City Weather Update
 const weatherIcon = document.getElementById("weather-icon");
 const weatherDeg = document.getElementById("degrees");
 const weatherStats = document.getElementById("status");
@@ -10,28 +12,34 @@ const weatherCity = document.getElementById("city");
 const weatherHumidity = document.getElementById("humidity");
 const weatherWind = document.getElementById("wind");
 
+//Forecast Weather of the City
+const forecastItems = document.querySelectorAll("card");
+
 const apiKey = "93c5c8b9a777a8c90a81c273437ec191";
 
-async function fetchWeatherData(){    
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&appid=${apiKey}&units=metric`);
+async function fetchWeatherData(display){    
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/${display}?q=${cityInput.value}&appid=${apiKey}&units=metric`);
     return response.json();
 }
 
-async function fetchCurrentWeatherData(){
+async function fetchCurrentWeatherData(display){
     const ipResponse = await fetch("https://ipapi.co/json/");
     const ip = await ipResponse.json();
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${ip.latitude}&lon=${ip.longitude}&appid=${apiKey}&units=metric`);
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/${display}?lat=${ip.latitude}&lon=${ip.longitude}&appid=${apiKey}&units=metric`);
     return response.json();
 }
 
 async function WeatherData(){
-
     if(cityInput.value.trim() == ''){
-        const data = await fetchCurrentWeatherData();
-        UpdateWeather(data);
+        const weatherData = await fetchCurrentWeatherData("weather");
+        const forecastData = await fetchCurrentWeatherData("forecast");
+        UpdateWeather(weatherData);
+        ForecastWeather(forecastData);
     } else {
-        const data = await fetchWeatherData();
-        UpdateWeather(data);
+        const weatherData = await fetchWeatherData("weather");
+        const forecastData = await fetchWeatherData("forecast");
+        UpdateWeather(weatherData);
+        ForecastWeather(forecastData);
     }    
 }
 
@@ -112,5 +120,9 @@ cityInput.addEventListener('keydown', (event) => {
         WeatherData();
     }
 });
+
+function ForecastWeather(weatherdata){
+    
+}
 
 WeatherData();
