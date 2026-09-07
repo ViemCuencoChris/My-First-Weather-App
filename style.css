@@ -21,10 +21,6 @@ body {
     gap: 1rem;
 }
 
-body::-webkit-scrollbar-track {
-    display: none;
-}
-
 /* Search Area */
 .search-bar, .weather-update-area {
     width: clamp(45rem, -5rem + 62.5vw, 70rem);
@@ -149,6 +145,27 @@ body::-webkit-scrollbar-track {
     overflow-x: auto;
 }
 
+.forecast-cards::-webkit-scrollbar {
+    height: 8px;
+}
+
+.forecast-cards::-webkit-scrollbar-track {
+    background: rgba(253, 240, 213, 0.2);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+}
+
+.forecast-cards::-webkit-scrollbar-thumb {
+    background: rgba(58, 55, 50, 0.6);
+    border-radius: 20px;
+}
+
+.forecast-cards::-webkit-scrollbar-thumb:hover {
+    background: rgb(134, 128, 118);
+    border-radius: 20px;
+}
+
 .card {
     height: clamp(8rem, -4rem + 15vw, 14rem);
     flex: 0 0 clamp(6rem, -6rem + 15vw, 12rem);
@@ -229,5 +246,28 @@ body::-webkit-scrollbar-track {
     /* Weather Forecast Area */
     .weather-forecast-area {
         width: clamp(18rem, 6.812rem + 47.735vw, 45rem);
+    }
+}
+
+@media (min-height: 900px) and (max-height: 1366px) and (max-width: 1024px){
+    .weather-forecast-area h4 {
+        font-size: clamp(1.5rem, -0.431rem + 3.433vh, 2.5rem);
+    }
+    
+    .card {
+        height: clamp(8rem, -5.519rem + 24.034vh, 15rem);
+        flex: 0 0 clamp(6rem, -7.519rem + 24.034vh, 13rem);
+    }
+
+    .card h5 {
+        font-size: clamp(1.2rem, -1.311rem + 4.464vh, 2.5rem);
+    }
+
+    .card img {
+        width: clamp(3rem, -2.794rem + 10.3vh, 6rem);
+    }
+
+    .card p {
+        font-size: clamp(1rem, -0.931rem + 3.433vh, 2rem);
     }
 }
