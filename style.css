@@ -25,13 +25,13 @@ body {
 /* Search Area */
 .search-bar, .weather-update-area {
     width: clamp(45rem, -5rem + 62.5vw, 70rem);
+    padding-inline: 1rem;
 
     background-color: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-radius: 16px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-    padding: 0.5rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -42,7 +42,7 @@ body {
     height: clamp(2rem, 0rem + 2.5vw, 3rem);
 }
 
-.search-bar #location-btn, .search-bar #profile {
+#profile {
     font-size: clamp(1.2rem, 0.6rem + 0.75vw, 1.5rem);
 }
 
@@ -54,7 +54,7 @@ body {
     cursor: pointer;
 }
 
-.search-bar #search-field {
+#search-field {
     font-size: 1rem;
 
     background: none;
@@ -82,32 +82,32 @@ body {
     gap: 2rem;
 }
 
-.weather-update-area .main-content, .weather-update-area .side-content {
+.main-content, .side-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.weather-update-area .main-content h1 {
+.main-content h1 {
     font-size: clamp(8rem, 0rem + 10vw, 12rem);
 
     line-height: 0.9;
 }
 
-.weather-update-area .main-content h2 {
+.main-content h2 {
     font-size: clamp(2rem, -2rem + 5vw, 4rem);
 }
 
-.weather-update-area .main-content h3 {
+.main-content h3 {
     font-size: clamp(1.2rem, -0.8rem + 2.5vw, 2.2rem);
 }
 
-.weather-update-area .side-content {
+.side-content {
     flex: 1;
 }
 
-.weather-update-area .side-content #weather-icon {
+#weather-icon {
     width: clamp(15rem, -5rem + 25vw, 25rem);
 
     height: auto;
@@ -115,7 +115,7 @@ body {
     object-fit: cover;
 }
 
-.weather-update-area .side-content .side-info {
+.side-info {
     font-size: clamp(1.2rem, -0.8rem + 2.5vw, 2.2rem);
     
     display: flex;
@@ -124,7 +124,7 @@ body {
     align-items: center;
 }
 
-/* weather forecast area */
+/* Weather Forecast Area */
 .weather-forecast-area {
     width: clamp(45rem, -5rem + 62.5vw, 70rem);
 
@@ -135,7 +135,7 @@ body {
     font-size: clamp(1.5rem, -0.5rem + 2.5vw, 2.5rem);
 }
 
-.weather-forecast-area .forecast-cards {
+.forecast-cards {
     height: 100%;
     width: 100%;
     padding-block: 1rem;
@@ -146,11 +146,11 @@ body {
     overflow-x: auto;
 }
 
-.weather-forecast-area .forecast-cards::-webkit-scrollbar{
+.forecast-cards::-webkit-scrollbar{
     display: none;
 }
 
-.weather-forecast-area .forecast-cards .card {
+.card {
     height: clamp(8rem, -4rem + 15vw, 14rem);
     flex: 0 0 clamp(6rem, -6rem + 15vw, 12rem);
 
@@ -169,11 +169,11 @@ body {
     display: none;
 }
 
-.weather-forecast-area .forecast-cards .card h5 {
+.card h5 {
     font-size: clamp(1.2rem, -0.4rem + 2vw, 2rem);
 }
 
-.weather-forecast-area .forecast-cards .card img {
+.card img {
     width: clamp(3rem, -3rem + 7.5vw, 6rem);
 
     height: auto;
@@ -181,6 +181,54 @@ body {
     object-fit: cover;
 }
 
-.weather-forecast-area .forecast-cards .card p {
+.card p {
     font-size: clamp(1rem, 0rem + 1.25vw, 1.5rem);
+}
+
+@media(max-width: 767px){
+    /* Search Area */
+    .search-bar, .weather-update-area{
+        width: clamp(18rem, 6.812rem + 47.735vw, 45rem);
+    }
+
+    .search-bar {
+        height: clamp(2rem, 0rem + 2.5vw, 3rem);
+        padding-inline: 0.8rem;
+    }
+
+    #location-btn, #profile {
+        font-size: clamp(1rem, 0.917rem + 0.354vw, 1.2rem);
+    }
+
+    #search-field {
+        font-size: clamp(0.8rem, 0.717rem + 0.354vw, 1rem);
+    }
+
+    /* Weather Update Area */
+    .weather-update-area {
+        height: clamp(22rem, 20.757rem + 5.304vw, 25rem);
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .main-content h1 {
+        font-size: clamp(4rem, 2.343rem + 7.072vw, 8rem);
+    }
+
+    .main-content h2 {
+        font-size: clamp(1.8rem, 1.717rem + 0.354vw, 2rem);
+    }
+
+    .main-content h3, .side-info {
+        font-size: clamp(1rem, 0.917rem + 0.354vw, 1.2rem);
+    }
+
+    #weather-icon {
+        width: clamp(7.5rem, 4.392rem + 13.26vw, 15rem);
+    }
+
+    /* Weather Forecast Area */
+    .weather-forecast-area {
+        width: clamp(18rem, 6.812rem + 47.735vw, 45rem);
+    }
 }
