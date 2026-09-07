@@ -21,6 +21,9 @@ body {
     gap: 1rem;
 }
 
+body::-webkit-scrollbar-track {
+    display: none;
+}
 
 /* Search Area */
 .search-bar, .weather-update-area {
@@ -144,10 +147,6 @@ body {
     align-items: center;
     gap: 1rem;
     overflow-x: auto;
-}
-
-.forecast-cards::-webkit-scrollbar{
-    display: none;
 }
 
 .card {

@@ -13,16 +13,16 @@ const weatherHumidity = document.getElementById("humidity");
 const weatherWind = document.getElementById("wind");
 
 //Forecast Weather of the City
-const forecastItems = document.querySelectorAll(".card");
+const forecastItems = document.querySelector(".forecast-cards");
 
 const apiKey = "93c5c8b9a777a8c90a81c273437ec191";
 
-async function fetchWeatherData(display){    
+async function getWeatherByCity(display){    
     const response = await fetch(`https://api.openweathermap.org/data/2.5/${display}?q=${cityInput.value}&appid=${apiKey}&units=metric`);
     return response.json();
 }
 
-async function fetchCurrentWeatherData(display){
+async function getWeatherByCoordinates(display){
     const ipResponse = await fetch("https://ipapi.co/json/");
     const ip = await ipResponse.json();
     const response = await fetch(`https://api.openweathermap.org/data/2.5/${display}?lat=${ip.latitude}&lon=${ip.longitude}&appid=${apiKey}&units=metric`);
@@ -31,14 +31,33 @@ async function fetchCurrentWeatherData(display){
 
 async function WeatherData(){
     if(cityInput.value.trim() == ''){
-        const weatherData = await fetchCurrentWeatherData("weather");
-        const forecastData = await fetchCurrentWeatherData("forecast");
+        const weatherData = await getWeatherByCoordinates("weather");
+        const forecastData = await getWeatherByCoordinates("forecast");
         UpdateWeather(weatherData, forecastData);
     } else {
-        const weatherData = await fetchWeatherData("weather");
-        const forecastData = await fetchWeatherData("forecast");
+        const weatherData = await getWeatherByCity("weather");
+        const forecastData = await getWeatherByCity("forecast");
         UpdateWeather(weatherData, forecastData);
     }    
+}
+
+function getWeatherIcon(weather){
+    switch(weather){
+        case "Clouds":
+            return "assets/clouds.png";
+        case "Clear":
+            return "assets/clear.png";
+        case "Rain":
+            return "assets/rain.png";
+        case "Drizzle":
+            return "assets/drizzle.png";
+        case "Mist":
+            return "assets/mist.png";
+        case "Snow":
+            return "assets/snow.png";
+        default:
+            return "assets/clouds.png";
+    }
 }
 
 function UpdateWeather(weatherdata, forecastdata){
@@ -53,7 +72,11 @@ function UpdateWeather(weatherdata, forecastdata){
         return;
     }
 
-    //weather data
+    mainWeather(weatherdata);
+    forecastWeather(forecastdata);
+}
+
+function mainWeather(weatherdata){
     const weather = weatherdata.weather[0].main;
     const temp = weatherdata.main.temp; 
     const city = weatherdata.name;
@@ -68,91 +91,58 @@ function UpdateWeather(weatherdata, forecastdata){
     weatherCity.innerHTML = `${locationIcon} ${city}`;
     weatherHumidity.innerHTML = `${humidityIcon}: ${humidity}`
     weatherWind.innerHTML = `${windIcon}: ${wind}`
+    weatherIcon.src = getWeatherIcon(weather);
 
-    //update main weather
     switch(weather){
         case "Clouds":
-            weatherIcon.src = "assets/clouds.png"
             weatherStats.textContent = "Cloudy";
             body.style.backgroundImage = "url('assets/cloudy-bg.jpg')";
             break;
         case "Clear":
-            weatherIcon.src = "assets/clear.png"
             weatherStats.textContent = "Sunny";
             body.style.backgroundImage = "url('assets/sunny-bg.jpg')";
             break;
         case "Rain":
-            weatherIcon.src = "assets/rain.png"
             weatherStats.textContent = "Rainy";
             body.style.backgroundImage = "url('assets/rainy-bg.jpg')";
             break;
         case "Drizzle":
-            weatherIcon.src = "assets/drizzle.png"
             weatherStats.textContent = "Drizzly";
             body.style.backgroundImage = "url('assets/drizzle-bg.jpg')";
             break;
         case "Mist":
-            weatherIcon.src = "assets/mist.png"
             weatherStats.textContent = "Misty";
             body.style.backgroundImage = "url('assets/mist-bg.jpg')";
             break;
         case "Snow":
-            weatherIcon.src = "assets/snow.png"
             weatherStats.textContent = "Snowy";
             body.style.backgroundImage = "url('assets/snow-bg.jpg')";
             break;
         default:
-            weatherIcon.src = "assets/clouds.png"
             weatherStats.textContent = "Cloudy";
             body.style.backgroundImage = "url('assets/cloudy-bg.jpg')";
             break;
     }
+}
 
-    //forecast data
-    let index = 0;
-    
-    //update each forecast items
-    forecastItems.forEach((card) => {
-        const forecast = forecastdata.list[index];
-        const forecastWeather = forecast.weather[0].main;
-        const date = forecast.dt_txt.split(" ")[1];
+function forecastWeather(forecastdata){
+    forecastdata.list.forEach((data) => {
+        const cards = document.createElement('div');
+        cards.classList.add("card");
+        forecastItems.appendChild(cards);
+
+        const time = document.createElement('h5');
+        const image = document.createElement('img');
+        const degrees = document.createElement('p');
+        cards.append(time, image, degrees);
+
+        const date = data.dt_txt.split(" ")[1];
         const milHour = Number(date.split(":")[0]);
         const stanHour = (milHour % 12 != 0) ? milHour % 12 : 12;
 
-        const degrees = Math.round(forecast.main.temp);
-        const heading = card.querySelector("h5");
-        const icon = card.querySelector("img");
-        const temp = card.querySelector("p");
-
-        heading.textContent = `${stanHour} ${(milHour >= 12) ? "PM" : "AM"}`;
-        temp.textContent = `${degrees}° C`
-
-        //update forecast weather
-        switch(forecastWeather){
-            case "Clouds":
-                icon.src = "assets/clouds.png"
-                break;
-            case "Clear":
-                icon.src = "assets/clear.png"
-                break;
-            case "Rain":
-                icon.src = "assets/rain.png"
-                break;
-            case "Drizzle":
-                icon.src = "assets/drizzle.png"
-                break;
-            case "Mist":
-                icon.src = "assets/mist.png"
-                break;
-            case "Snow":
-                icon.src = "assets/snow.png"
-                break;
-            default:
-                icon.src = "assets/clouds.png"
-                break;
-        }
-
-        index++;
+        time.textContent = `${stanHour} ${(milHour >= 12) ? "PM" : "AM"}`
+        image.src = getWeatherIcon(data.weather[0].main);
+        degrees.textContent = `${Math.round(data.main.temp)}° C`;
     });
 }
 
