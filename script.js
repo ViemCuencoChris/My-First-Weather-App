@@ -125,6 +125,10 @@ function mainWeather(weatherdata){
     }
 }
 
+function getWeatherTime(){
+    
+}
+
 function forecastWeather(forecastdata){
     forecastdata.list.forEach((data) => {
         const cards = document.createElement('div');
@@ -136,13 +140,17 @@ function forecastWeather(forecastdata){
         const degrees = document.createElement('p');
         cards.append(time, image, degrees);
 
-        const date = data.dt_txt.split(" ")[1];
-        const milHour = Number(date.split(":")[0]);
+        const date = data.dt_txt.split(" ");
+        const milHour = Number(date[1].split(":")[0]);
         const stanHour = (milHour % 12 != 0) ? milHour % 12 : 12;
+
+        const period = new Date(date[0]);
+        const month = String(period).split(" ")[1];
+        const day = String(period).split(" ")[2];
 
         time.textContent = `${stanHour} ${(milHour >= 12) ? "PM" : "AM"}`
         image.src = getWeatherIcon(data.weather[0].main);
-        degrees.textContent = `${Math.round(data.main.temp)}° C`;
+        degrees.textContent = `${month} ${day}`;
     });
 }
 
