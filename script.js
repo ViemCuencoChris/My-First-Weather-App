@@ -125,22 +125,13 @@ function mainWeather(weatherdata){
     }
 }
 
-function getWeatherTime(){
-    
-}
-
 function forecastWeather(forecastdata){
     forecastdata.list.forEach((data) => {
         const date = data.dt_txt;
         const forecastDate = new Date(date);
-        const forecastHour = forecastDate.getHours();
-        const forecastDay = forecastDate.getDay();
-
         const currentDate = new Date();
-        const currentHour = currentDate.getHours();
-        const currentDay = currentDate.getDay();
 
-        if(forecastDay >= currentDay && forecastHour > currentHour){
+        if(forecastDate > currentDate){
             const cards = document.createElement('div');
             cards.classList.add("card");
             forecastItems.appendChild(cards);
@@ -150,11 +141,13 @@ function forecastWeather(forecastdata){
             const degrees = document.createElement('p');
             cards.append(time, image, degrees);
 
-            const period = new Date(data.dt_txt.split(" ")[0]);
-            const month = String(period).split(" ")[1];
-            const day = String(period).split(" ")[2];
+            
+            const month = String(forecastDate).split(" ")[1];
+            const day = forecastDate.getDate();
 
-            time.textContent = `${(forecastHour % 12 != 0) ? forecastHour % 12 : 12} ${(forecastHour >= 12) ? "PM" : "AM"}`
+            const hour = forecastDate.getHours();
+
+            time.textContent = `${(hour % 12 != 0) ? hour % 12 : 12} ${(hour >= 12) ? "PM" : "AM"}`
             image.src = getWeatherIcon(data.weather[0].main);
             degrees.textContent = `${month} ${day}`;
         }
