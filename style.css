@@ -38,7 +38,6 @@ body {
 
 .search-bar {
     height: clamp(2rem, 0rem + 2.5vw, 3rem);
-    min-width: 0;
 }
 
 #profile {
@@ -65,6 +64,7 @@ body {
     flex: 1;
     margin-inline: 1rem;
     color: rgb(253, 240, 213);
+    min-width: 0;
 }
 
 #search-field::placeholder {
@@ -204,6 +204,10 @@ body {
 }
 
 @media(max-width: 767px){
+    body {
+        padding: 1rem;
+    }
+
     /* Search Area */
     .search-bar, .weather-update-area{
         width: clamp(18rem, 6.812rem + 47.735vw, 45rem);
