@@ -32,17 +32,18 @@ body {
     border-radius: 16px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     display: flex;
-    justify-content: space-between;
     align-items: center;
     color: #fdf0d5;
 }
 
 .search-bar {
     height: clamp(2rem, 0rem + 2.5vw, 3rem);
+    min-width: 0;
 }
 
 #profile {
     font-size: clamp(1.2rem, 0.6rem + 0.75vw, 1.5rem);
+    flex-shrink: 0;
 }
 
 #location-btn {
@@ -51,6 +52,7 @@ body {
     border-right: 1px solid rgba(253, 240, 213, 0.4);
     text-align: left;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 #search-field {
