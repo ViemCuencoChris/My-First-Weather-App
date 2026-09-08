@@ -131,26 +131,33 @@ function getWeatherTime(){
 
 function forecastWeather(forecastdata){
     forecastdata.list.forEach((data) => {
-        const cards = document.createElement('div');
-        cards.classList.add("card");
-        forecastItems.appendChild(cards);
+        const date = data.dt_txt;
+        const forecastDate = new Date(date);
+        const forecastHour = forecastDate.getHours();
+        const forecastDay = forecastDate.getDay();
 
-        const time = document.createElement('h5');
-        const image = document.createElement('img');
-        const degrees = document.createElement('p');
-        cards.append(time, image, degrees);
+        const currentDate = new Date();
+        const currentHour = currentDate.getHours();
+        const currentDay = currentDate.getDay();
 
-        const date = data.dt_txt.split(" ");
-        const milHour = Number(date[1].split(":")[0]);
-        const stanHour = (milHour % 12 != 0) ? milHour % 12 : 12;
+        if(forecastDay >= currentDay && forecastHour > currentHour){
+            const cards = document.createElement('div');
+            cards.classList.add("card");
+            forecastItems.appendChild(cards);
 
-        const period = new Date(date[0]);
-        const month = String(period).split(" ")[1];
-        const day = String(period).split(" ")[2];
+            const time = document.createElement('h5');
+            const image = document.createElement('img');
+            const degrees = document.createElement('p');
+            cards.append(time, image, degrees);
 
-        time.textContent = `${stanHour} ${(milHour >= 12) ? "PM" : "AM"}`
-        image.src = getWeatherIcon(data.weather[0].main);
-        degrees.textContent = `${month} ${day}`;
+            const period = new Date(data.dt_txt.split(" ")[0]);
+            const month = String(period).split(" ")[1];
+            const day = String(period).split(" ")[2];
+
+            time.textContent = `${(forecastHour % 12 != 0) ? forecastHour % 12 : 12} ${(forecastHour >= 12) ? "PM" : "AM"}`
+            image.src = getWeatherIcon(data.weather[0].main);
+            degrees.textContent = `${month} ${day}`;
+        }
     });
 }
 
